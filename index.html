@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nanda Abhilash — IT Graduate</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --accent: #00f5a0;
+    --accent2: #ff6b35;
+    --accent3: #ffe600;
+    --text: #f0f0f5;
+    --muted: #6b6b80;
+    --border: rgba(255,255,255,0.07);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Mono', monospace; overflow-x: hidden; cursor: none; }
+
+  .cursor { position:fixed; width:12px; height:12px; background:var(--accent); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:width .2s,height .2s; mix-blend-mode:difference; }
+  .cursor-ring { position:fixed; width:36px; height:36px; border:1.5px solid var(--accent); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); mix-blend-mode:difference; }
+
+  body::before { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events:none; z-index:1000; opacity:.5; }
+
+  nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; justify-content:space-between; align-items:center; padding:1.5rem 3rem; background:rgba(10,10,15,.85); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); }
+  .nav-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.1rem; color:var(--text); text-decoration:none; letter-spacing:-.02em; }
+  .nav-logo span { color:var(--accent); }
+  .nav-links { display:flex; gap:2rem; list-style:none; }
+  .nav-links a { color:var(--muted); text-decoration:none; font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; transition:color .2s; }
+  .nav-links a:hover { color:var(--accent); }
+
+  .hero { min-height:100vh; display:flex; align-items:center; padding:8rem 3rem 6rem; position:relative; overflow:hidden; }
+  .hero-grid-bg { position:absolute; inset:0; background-image:linear-gradient(rgba(0,245,160,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,245,160,.03) 1px,transparent 1px); background-size:60px 60px; animation:gridScroll 20s linear infinite; }
+  @keyframes gridScroll { from{background-position:0 0} to{background-position:60px 60px} }
+  .hero-glow { position:absolute; width:600px; height:600px; background:radial-gradient(circle,rgba(0,245,160,.08) 0%,transparent 70%); top:-100px; right:-100px; animation:pulse 6s ease-in-out infinite; }
+  .hero-glow2 { position:absolute; width:400px; height:400px; background:radial-gradient(circle,rgba(255,107,53,.06) 0%,transparent 70%); bottom:0; left:200px; animation:pulse 8s ease-in-out infinite reverse; }
+  @keyframes pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.1);opacity:.7} }
+  .hero-content { position:relative; max-width:960px; }
+  .hero-tag { display:inline-flex; align-items:center; gap:.5rem; background:rgba(0,245,160,.08); border:1px solid rgba(0,245,160,.2); color:var(--accent); font-size:.7rem; letter-spacing:.15em; text-transform:uppercase; padding:.4rem 1rem; border-radius:2px; margin-bottom:2rem; animation:fadeUp .6s ease both; }
+  .hero-tag::before { content:''; width:6px; height:6px; background:var(--accent); border-radius:50%; animation:blink 1.5s ease infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+  .hero-name { font-family:'Syne',sans-serif; font-weight:800; font-size:clamp(3.5rem,8vw,7rem); line-height:.95; letter-spacing:-.03em; margin-bottom:1.5rem; animation:fadeUp .6s .1s ease both; }
+  .hero-name .line2 { display:block; color:transparent; -webkit-text-stroke:1.5px rgba(255,255,255,.3); }
+  .hero-name .accent-word { color:var(--accent); -webkit-text-stroke:0; font-style:italic; font-family:'Instrument Serif',serif; }
+  .hero-sub { font-size:.9rem; color:var(--muted); max-width:520px; line-height:1.85; margin-bottom:1.25rem; animation:fadeUp .6s .2s ease both; }
+  .hero-badges { display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:2.5rem; animation:fadeUp .6s .25s ease both; }
+  .hero-badge { background:rgba(255,255,255,.04); border:1px solid var(--border); color:var(--muted); font-size:.62rem; letter-spacing:.08em; padding:.3rem .8rem; border-radius:2px; }
+  .hero-badge.g { background:rgba(0,245,160,.06); border-color:rgba(0,245,160,.2); color:var(--accent); }
+  .hero-badge.b { background:rgba(255,107,53,.06); border-color:rgba(255,107,53,.2); color:var(--accent2); }
+  .hero-badge.p { background:rgba(255,230,0,.06); border-color:rgba(255,230,0,.2); color:var(--accent3); }
+  .hero-cta { display:flex; gap:1rem; flex-wrap:wrap; animation:fadeUp .6s .3s ease both; }
+  .btn-primary { display:inline-flex; align-items:center; gap:.5rem; background:var(--accent); color:#0a0a0f; font-family:'Syne',sans-serif; font-weight:700; font-size:.8rem; letter-spacing:.05em; text-transform:uppercase; padding:.9rem 2rem; text-decoration:none; border-radius:2px; transition:transform .2s,box-shadow .2s; }
+  .btn-primary:hover { transform:translateY(-2px); box-shadow:0 10px 40px rgba(0,245,160,.3); }
+  .btn-secondary { display:inline-flex; align-items:center; background:transparent; color:var(--text); font-family:'Syne',sans-serif; font-weight:600; font-size:.8rem; letter-spacing:.05em; text-transform:uppercase; padding:.9rem 2rem; text-decoration:none; border:1px solid var(--border); border-radius:2px; transition:border-color .2s,color .2s; }
+  .btn-secondary:hover { border-color:var(--accent2); color:var(--accent2); }
+  .hero-scroll { position:absolute; bottom:3rem; left:3rem; display:flex; align-items:center; gap:1rem; color:var(--muted); font-size:.65rem; letter-spacing:.15em; text-transform:uppercase; animation:fadeUp .6s .5s ease both; }
+  .scroll-line { width:40px; height:1px; background:var(--muted); animation:sl 2s ease infinite; }
+  @keyframes sl { 0%{width:40px} 50%{width:10px} 100%{width:40px} }
+  .hero-stats { position:absolute; right:3rem; bottom:3rem; display:flex; gap:3rem; animation:fadeUp .6s .4s ease both; }
+  .stat { text-align:right; }
+  .stat-num { font-family:'Syne',sans-serif; font-weight:800; font-size:2rem; color:var(--accent); line-height:1; }
+  .stat-label { font-size:.65rem; color:var(--muted); letter-spacing:.1em; text-transform:uppercase; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+  section { padding:8rem 3rem; position:relative; }
+  .section-label { font-size:.65rem; letter-spacing:.2em; text-transform:uppercase; color:var(--accent); margin-bottom:1rem; display:flex; align-items:center; gap:1rem; }
+  .section-label::after { content:''; flex:1; max-width:60px; height:1px; background:var(--accent); opacity:.4; }
+  .section-title { font-family:'Syne',sans-serif; font-weight:800; font-size:clamp(2rem,5vw,3.5rem); letter-spacing:-.03em; line-height:1.05; margin-bottom:4rem; }
+
+  /* ABOUT */
+  .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:start; }
+  .about-text p { color:var(--muted); line-height:1.9; font-size:.85rem; margin-bottom:1.5rem; }
+  .about-text strong { color:var(--text); font-weight:400; }
+  .about-text em { color:var(--accent); font-style:normal; }
+  .about-card { background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:2rem; position:relative; overflow:hidden; }
+  .about-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--accent),var(--accent2)); }
+  .about-card-title { font-family:'Syne',sans-serif; font-size:.7rem; letter-spacing:.15em; text-transform:uppercase; color:var(--muted); margin-bottom:1.5rem; }
+  .info-row { display:flex; justify-content:space-between; align-items:center; padding:.7rem 0; border-bottom:1px solid var(--border); font-size:.76rem; }
+  .info-row:last-child { border-bottom:none; }
+  .info-key { color:var(--muted); }
+  .info-val { color:var(--text); }
+  .green { color:var(--accent) !important; }
+  .blue { color:var(--accent2) !important; }
+
+  /* EXPERIENCE */
+  .exp-section { background:var(--surface); }
+  .timeline { display:flex; flex-direction:column; gap:1.25rem; }
+  .exp-card { background:var(--bg); border:1px solid var(--border); border-radius:4px; padding:2rem 2.25rem; position:relative; overflow:hidden; transition:border-color .2s,transform .2s; }
+  .exp-card:hover { border-color:rgba(0,245,160,.25); transform:translateX(5px); }
+  .exp-card::before { content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:linear-gradient(180deg,var(--accent),var(--accent2)); }
+  .exp-card.ibm::before { background:linear-gradient(180deg,var(--accent2),#0062ff); }
+  .exp-card.siemens::before { background:linear-gradient(180deg,var(--accent3),var(--accent2)); }
+  .exp-card.library::before { background:linear-gradient(180deg,var(--accent3),rgba(255,230,0,.3)); }
+  .exp-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1rem; flex-wrap:wrap; gap:.5rem; }
+  .exp-role { font-family:'Syne',sans-serif; font-weight:700; font-size:.95rem; color:var(--text); }
+  .exp-company { font-size:.72rem; color:var(--accent); margin-top:.2rem; letter-spacing:.04em; }
+  .exp-date { font-size:.67rem; color:var(--muted); letter-spacing:.05em; text-align:right; }
+  .exp-date .loc { display:block; opacity:.6; margin-top:.2rem; }
+  .exp-bullets { list-style:none; display:flex; flex-direction:column; gap:.55rem; }
+  .exp-bullets li { color:var(--muted); font-size:.77rem; line-height:1.7; padding-left:1.2rem; position:relative; }
+  .exp-bullets li::before { content:'→'; position:absolute; left:0; color:var(--accent); opacity:.45; font-size:.68rem; top:.05rem; }
+
+  /* GRADES */
+  .grades-intro { display:grid; grid-template-columns:1fr 1fr; gap:4rem; margin-bottom:4rem; align-items:end; }
+  .grades-intro p { color:var(--muted); font-size:.85rem; line-height:1.8; }
+  .avg-display { text-align:right; }
+  .avg-num { font-family:'Syne',sans-serif; font-weight:800; font-size:5rem; color:var(--accent); line-height:1; letter-spacing:-.05em; }
+  .avg-label { color:var(--muted); font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; margin-top:.5rem; }
+  .grades-tabs { display:flex; gap:.5rem; margin-bottom:2rem; flex-wrap:wrap; }
+  .tab-btn { background:transparent; border:1px solid var(--border); color:var(--muted); font-family:'DM Mono',monospace; font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; padding:.5rem 1.2rem; cursor:pointer; border-radius:2px; transition:all .2s; }
+  .tab-btn.active, .tab-btn:hover { background:var(--accent); border-color:var(--accent); color:#0a0a0f; }
+  .grades-grid { display:none; }
+  .grades-grid.active { display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:1rem; }
+  .grade-card { background:var(--bg); border:1px solid var(--border); border-radius:4px; padding:1.2rem 1.5rem; display:flex; justify-content:space-between; align-items:center; transition:border-color .2s,transform .2s; position:relative; overflow:hidden; }
+  .grade-card::before { content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--accent); transform:scaleY(0); transform-origin:bottom; transition:transform .3s ease; }
+  .grade-card:hover { border-color:rgba(0,245,160,.3); transform:translateX(4px); }
+  .grade-card:hover::before { transform:scaleY(1); }
+  .grade-module { font-size:.76rem; color:var(--text); line-height:1.4; max-width:210px; }
+  .grade-score { font-family:'Syne',sans-serif; font-weight:800; font-size:1.3rem; color:var(--accent); white-space:nowrap; }
+  .grade-score span { font-size:.65rem; color:var(--muted); font-family:'DM Mono',monospace; font-weight:400; }
+
+  /* SKILLS */
+  .skills-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
+  .skill-cluster { background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1.75rem; transition:border-color .2s; }
+  .skill-cluster:hover { border-color:rgba(0,245,160,.2); }
+  .cluster-icon { font-size:1.4rem; margin-bottom:1rem; }
+  .cluster-name { font-family:'Syne',sans-serif; font-weight:700; font-size:.82rem; color:var(--text); margin-bottom:1rem; letter-spacing:.02em; }
+  .skill-tags { display:flex; flex-wrap:wrap; gap:.4rem; }
+  .skill-tag { background:rgba(0,245,160,.06); border:1px solid rgba(0,245,160,.15); color:var(--accent); font-size:.63rem; letter-spacing:.07em; padding:.28rem .65rem; border-radius:2px; }
+  .skill-tag.b { background:rgba(255,107,53,.06); border-color:rgba(255,107,53,.15); color:var(--accent2); }
+  .skill-tag.p { background:rgba(255,230,0,.06); border-color:rgba(255,230,0,.15); color:var(--accent3); }
+
+  /* AWARDS */
+  .awards-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:1.5rem; margin-bottom:4rem; }
+  .award-card { background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:2rem; transition:border-color .2s,transform .2s; position:relative; overflow:hidden; }
+  .award-card:hover { border-color:rgba(255,230,0,.3); transform:translateY(-4px); }
+  .award-card::after { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(255,110,180,.03) 0%,transparent 60%); pointer-events:none; }
+  .award-icon { font-size:1.6rem; margin-bottom:1rem; }
+  .award-title { font-family:'Syne',sans-serif; font-weight:700; font-size:.88rem; color:var(--text); margin-bottom:.4rem; line-height:1.3; }
+  .award-org { font-size:.68rem; color:var(--accent3); letter-spacing:.06em; margin-bottom:.75rem; }
+  .award-desc { color:var(--muted); font-size:.74rem; line-height:1.7; }
+  .vol-subtitle { font-family:'Syne',sans-serif; font-weight:700; font-size:1.3rem; color:var(--text); margin-bottom:2rem; letter-spacing:-.02em; }
+  .vol-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; }
+  .vol-card { background:var(--bg); border:1px solid var(--border); border-radius:4px; padding:1.75rem; transition:border-color .2s; }
+  .vol-card:hover { border-color:rgba(255,107,53,.25); }
+  .vol-title { font-family:'Syne',sans-serif; font-weight:700; font-size:.86rem; color:var(--text); margin-bottom:.3rem; }
+  .vol-org { font-size:.68rem; color:var(--accent2); margin-bottom:.7rem; }
+  .vol-desc { color:var(--muted); font-size:.74rem; line-height:1.7; }
+
+  /* CONTACT */
+  .contact-section { background:var(--surface); }
+  .contact-inner { max-width:680px; }
+  .contact-sub { color:var(--muted); font-size:.85rem; line-height:1.8; margin-bottom:3rem; max-width:480px; }
+  .contact-links { display:flex; flex-direction:column; gap:.75rem; }
+  .contact-link { display:flex; align-items:center; justify-content:space-between; background:var(--bg); border:1px solid var(--border); border-radius:4px; padding:1.2rem 1.75rem; text-decoration:none; transition:border-color .2s,transform .2s; max-width:460px; }
+  .contact-link:hover { border-color:var(--accent); transform:translateX(6px); }
+  .contact-link-left { display:flex; align-items:center; gap:1rem; }
+  .contact-link-icon { font-size:1rem; }
+  .contact-link-label { font-family:'Syne',sans-serif; font-size:.78rem; color:var(--text); font-weight:600; }
+  .contact-link-sub { font-size:.68rem; color:var(--muted); }
+  .contact-link-arrow { color:var(--muted); font-size:.8rem; transition:color .2s,transform .2s; }
+  .contact-link:hover .contact-link-arrow { color:var(--accent); transform:translateX(4px); }
+
+  footer { border-top:1px solid var(--border); padding:2.5rem 3rem; display:flex; justify-content:space-between; align-items:center; }
+  .footer-text { color:var(--muted); font-size:.7rem; letter-spacing:.05em; }
+  .footer-text span { color:var(--accent); }
+
+  .reveal { opacity:1; transform:translateY(0); transition:opacity .7s ease,transform .7s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+
+  @media(max-width:768px){
+    nav{padding:1.25rem 1.5rem}
+    .nav-links{display:none}
+    section{padding:5rem 1.5rem}
+    .hero{padding:7rem 1.5rem 6rem}
+    .about-grid,.grades-intro,.vol-grid{grid-template-columns:1fr;gap:2rem}
+    .avg-display{text-align:left}
+    .skills-grid{grid-template-columns:1fr}
+    .hero-stats{right:1.5rem;gap:1.5rem;bottom:5rem}
+    .hero-scroll{left:1.5rem;bottom:2.5rem}
+    footer{flex-direction:column;gap:1rem;text-align:center}
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a href="#" class="nav-logo">NA<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#grades">Academic</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#awards">Awards</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Available for graduate roles · 2026</div>
+    <h1 class="hero-name">
+      <span style="display:block">Nanda</span>
+      <span class="line2"><span class="accent-word">Abhilash</span></span>
+    </h1>
+    <p class="hero-sub">Final-year Computer Science graduate from UEL, experienced at IBM &amp; Siemens, consistently first-class, and passionate about technology that creates real-world impact.</p>
+    <div class="hero-badges">
+      <span class="hero-badge g">IBM Intern</span>
+      <span class="hero-badge g">Siemens Intern</span>
+      <span class="hero-badge b">Microsoft Semi-Finalist</span>
+      <span class="hero-badge p">Teaching Assistant</span>
+      <span class="hero-badge g">First Class · 91%</span>
+      <span class="hero-badge b">Volunteering Award</span>
+    </div>
+    <div class="hero-cta">
+      <a href="/cdn-cgi/l/email-protection#751b141b111414171d1c1914061d4c44444c351218141c195b161a18" class="btn-primary">Get in touch →</a>
+      <a href="#experience" class="btn-secondary">View experience</a>
+    </div>
+  </div>
+  <div class="hero-scroll"><div class="scroll-line"></div>scroll to explore</div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">91%</div><div class="stat-label">Avg Grade</div></div>
+    <div class="stat"><div class="stat-num">5+</div><div class="stat-label">Roles Held</div></div>
+    <div class="stat"><div class="stat-num">1st</div><div class="stat-label">Class</div></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">01 — About</div>
+  <h2 class="section-title reveal">Bridging <em style="color:var(--accent);font-style:italic;font-family:'Instrument Serif',serif;">technology</em><br>& real impact.</h2>
+  <div class="about-grid reveal">
+    <div class="about-text">
+      <p>I'm <strong>Nanda Abhilash</strong>, a final-year Computer Science student at the <em>University of East London</em> with real-world experience at <strong>IBM</strong> and <strong>Siemens</strong> alongside a first-class academic record, 91% at both Level 4 and Level 5.</p>
+      <p>At IBM, I contributed to building an <em>AI-powered course recommendation application</em>, working across user research, product design, and cross-functional team collaboration. At Siemens, I conducted data analysis and developed sustainability solutions presented to potential shareholders.</p>
+      <p>I currently serve as a <strong>Teaching Assistant</strong> at UEL and am committed to technology that genuinely helps people, from mentoring peers to supporting elderly residents with digital skills. I'm actively seeking graduate tech roles where I can drive transformation and long-term value.</p>
+    </div>
+    <div class="about-card">
+      <div class="about-card-title">// Quick Info</div>
+      <div class="info-row"><span class="info-key">University</span><span class="info-val">UEL, London</span></div>
+      <div class="info-row"><span class="info-key">Degree</span><span class="info-val">BSc Computer Science</span></div>
+      <div class="info-row"><span class="info-key">Level 4 Grade</span><span class="info-val green">91.1% — First Class</span></div>
+      <div class="info-row"><span class="info-key">Level 5 Grade</span><span class="info-val green">91% — First Class</span></div>
+      <div class="info-row"><span class="info-key">Industry Exp.</span><span class="info-val blue">IBM · Siemens</span></div>
+      <div class="info-row"><span class="info-key">Current Role</span><span class="info-val">Teaching Assistant, UEL</span></div>
+      <div class="info-row"><span class="info-key">Status</span><span class="info-val green">Open to Opportunities</span></div>
+      <div class="info-row"><span class="info-key">Location</span><span class="info-val">London, UK</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="exp-section">
+  <div class="section-label">02 — Work Experience</div>
+  <h2 class="section-title reveal">Where I've<br><em style="color:var(--accent2);font-style:italic;font-family:'Instrument Serif',serif;">worked.</em></h2>
+  <div class="timeline reveal">
+
+    <div class="exp-card">
+      <div class="exp-header">
+        <div><div class="exp-role">Teaching Assistant</div><div class="exp-company" style="color:var(--accent)">University of East London</div></div>
+        <div class="exp-date">June 2025 – Present<span class="loc">London, UK</span></div>
+      </div>
+      <ul class="exp-bullets">
+        <li>Support students across Mathematics for Computing, Computing in Practice, and Information Systems Modelling & Design.</li>
+        <li>Assist in marking assignments and delivering constructive feedback to improve student understanding and performance.</li>
+        <li>Facilitate tutorials, workshops, and lab sessions reinforcing theory through practical exercises.</li>
+        <li>Collaborate with lecturers to develop teaching materials aligned with learning outcomes.</li>
+      </ul>
+    </div>
+
+    <div class="exp-card ibm">
+      <div class="exp-header">
+        <div><div class="exp-role">Intern</div><div class="exp-company" style="color:var(--accent2)">IBM</div></div>
+        <div class="exp-date">April – July 2025<span class="loc">London, UK</span></div>
+      </div>
+      <ul class="exp-bullets">
+        <li>Contributed to developing an AI-powered application recommending IBM Skills Build courses based on students' academic and career goals.</li>
+        <li>Supported focus groups, surveys, and student interviews to gather user insights and improve application features.</li>
+        <li>Contributed to presentations and reports delivered to IBM professionals, highlighting findings and project progress.</li>
+        <li>Collaborated with cross-functional teams, gaining hands-on exposure to AI development, research, and product design.</li>
+      </ul>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-header">
+        <div><div class="exp-role">Enrolment Support Officer</div><div class="exp-company" style="color:var(--accent)">University of East London</div></div>
+        <div class="exp-date">August – September 2025<span class="loc">London, UK</span></div>
+      </div>
+      <ul class="exp-bullets">
+        <li>Provided comprehensive support to students during enrolment, resolving queries and guiding registration processes.</li>
+        <li>Utilised SITS (Student Information System) to maintain student records, track enrolment status, and generate reports.</li>
+        <li>Leveraged CRM tools to manage student interactions and improve response times and satisfaction.</li>
+      </ul>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-header">
+        <div><div class="exp-role">Digital Skills Advisor</div><div class="exp-company" style="color:var(--accent)">University of East London</div></div>
+        <div class="exp-date">November 2024 – Present<span class="loc">London, UK</span></div>
+      </div>
+      <ul class="exp-bullets">
+        <li>Support students in navigating IT systems, software, and digital tools to improve learning outcomes and employability.</li>
+        <li>Provide one-on-one guidance and troubleshooting across digital platforms and resources.</li>
+        <li>Foster a supportive environment empowering students to succeed academically and professionally.</li>
+      </ul>
+    </div>
+
+    <div class="exp-card siemens">
+      <div class="exp-header">
+        <div><div class="exp-role">Smart Infrastructure Intern</div><div class="exp-company" style="color:var(--accent3)">Siemens — DoT Programme</div></div>
+        <div class="exp-date">February – May 2024<span class="loc">London, UK</span></div>
+      </div>
+      <ul class="exp-bullets">
+        <li>Conducted data analysis to support project planning and implementation within the Smart Infrastructure Business Development team.</li>
+        <li>Collaborated to develop a sustainability project contributing directly to business development initiatives.</li>
+        <li>Research led to 2 innovative solutions presented to potential shareholders, enhancing the project's impact.</li>
+        <li>Delivered weekly presentations, developing strong communication and analytical skills in a corporate environment.</li>
+      </ul>
+    </div>
+
+    <div class="exp-card library">
+      <div class="exp-header">
+        <div><div class="exp-role">Library Assistant</div><div class="exp-company" style="color:var(--accent3)">London Borough of Newham</div></div>
+        <div class="exp-date">December 2024 – March 2025<span class="loc">London, UK</span></div>
+      </div>
+      <ul class="exp-bullets">
+        <li>Assisted library visitors with locating resources, using library systems, and accessing digital tools.</li>
+        <li>Delivered excellent customer service fostering a supportive and inclusive space for all visitors.</li>
+        <li>Collaborated with team members to implement new initiatives and improve user experience.</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- GRADES -->
+<section id="grades">
+  <div class="section-label">03 — Academic Record</div>
+  <h2 class="section-title reveal">First-class across<br><em style="color:var(--accent);font-style:italic;font-family:'Instrument Serif',serif;">every level.</em></h2>
+  <div class="grades-intro reveal">
+    <p>91% average at both Level 4 and Level 5, a consistent, genuine engagement with computing principles, not just exam performance. Every module reflects depth of understanding.</p>
+    <div class="avg-display">
+      <div class="avg-num">91<span style="font-size:2rem;color:var(--muted)">%</span></div>
+      <div class="avg-label">L4 & L5 Average</div>
+    </div>
+  </div>
+  <div class="grades-tabs reveal">
+    <button class="tab-btn active" onclick="showLevel('all',this)">All Modules</button>
+    <button class="tab-btn" onclick="showLevel('l5',this)">Level 5</button>
+    <button class="tab-btn" onclick="showLevel('l4',this)">Level 4</button>
+    <button class="tab-btn" onclick="showLevel('l3',this)">Level 3</button>
+  </div>
+  <div class="grades-grid active" id="all">
+    <div class="grade-card"><div class="grade-module">Web & Mobile App Development</div><div class="grade-score">94<span>%</span></div></div>
+    <div class="grade-card"><div class="grade-module">Mental Wealth Professional Life</div><div class="grade-score">95<span>%</span></div></div>
+    <div class="grade-card"><div class="grade-module">IT Project Pitching</div><div class="grade-score">100<span>%</span></div></div>
+    <div class="grade-card"><div class="grade-module">Advanced Programming</div><div class="grade-score">92<span>%</span></div></div>
+    <div class="grade-card"><div class="grade-module">Software Development</div><div class="grade-score">92<span>%</span></div></div>
+    <div class="grade-card"><div class="grade-module">Maths for Computing</div><div class="grade-score">92<span>%</span></div></div>
+    <div class="grade-card"><div class="grade-module">Physical Science</div><div class="grade-score">93<span>%</span></div></div>
+    <div class="grade-card"><div class="grade-module">English for Academic Purposes</div><div class="grade-score">92<span>%</span></div></div>
+    <div class="grade-card"><div class="grade-module">Data Structures & Algorithms</div><div class="grade-score">91<span>%</span></div></div>
+    <div class="grade-card"><div class="grade-module">Web Technologies</div><div class="grade-score">91<span>%</span></div></div>
+    <div class="grade-card"><div class="grade-module">Introduction to Computing</div><div class="grade-score">90<span>%</span></div></div>
+    <div class="grade-card"><div class="grade-module">Computing in Practice</div><div class="grade-score">89<span>%</span></div></div>
+    <div class="grade-card"><div class="grade-module">Database Systems</div><div class="grade-score">88<span>%</span></div></div>
+    <div class="grade-card"><div class="grade-module">Information Systems Modelling & Design</div><div class="grade-score">88<span>%</span></div></div>
+    <div class="grade-card"><div class="grade-module">Computer Systems & Networks</div><div class="grade-score">84<span>%</span></div></div>
+    <div class="grade-card"><div class="grade-module">Mathematical Applications</div><div class="grade-score">82<span>%</span></div></div>
+    <div class="grade-card"><div class="grade-module">Data Communications & Networks</div><div class="grade-score">81<span>%</span></div></div>
+    <div class="grade-card"><div class="grade-module">Research & Study Skills</div><div class="grade-score">80<span>%</span></div></div>
+  </div>
+  <div class="grades-grid" id="l5">
+    <div class="grade-card"><div class="grade-module">Web & Mobile App Development</div><div class="grade-score">94<span>%</span></div></div>
+    <div class="grade-card"><div class="grade-module">Advanced Programming</div><div class="grade-score">92<span>%</span></div></div>
+    <div class="grade-card"><div class="grade-module">Data Structures & Algorithms</div><div class="grade-score">91<span>%</span></div></div>
+    <div class="grade-card"><div class="grade-module">Computing in Practice</div><div class="grade-score">89<span>%</span></div></div>
+    <div class="grade-card"><div class="grade-module">Database Systems</div><div class="grade-score">88<span>%</span></div></div>
+    <div class="grade-card"><div class="grade-module">Data Communications & Networks</div><div class="grade-score">81<span>%</span></div></div>
+  </div>
+  <div class="grades-grid" id="l4">
+    <div class="grade-card"><div class="grade-module">IT Project Pitching</div><div class="grade-score">100<span>%</span></div></div>
+    <div class="grade-card"><div class="grade-module">Software Development</div><div class="grade-score">92<span>%</span></div></div>
+    <div class="grade-card"><div class="grade-module">Maths for Computing</div><div class="grade-score">92<span>%</span></div></div>
+    <div class="grade-card"><div class="grade-module">Web Technologies</div><div class="grade-score">91<span>%</span></div></div>
+    <div class="grade-card"><div class="grade-module">Information Systems Modelling & Design</div><div class="grade-score">88<span>%</span></div></div>
+    <div class="grade-card"><div class="grade-module">Computer Systems & Networks</div><div class="grade-score">84<span>%</span></div></div>
+  </div>
+  <div class="grades-grid" id="l3">
+    <div class="grade-card"><div class="grade-module">Mental Wealth Professional Life</div><div class="grade-score">95<span>%</span></div></div>
+    <div class="grade-card"><div class="grade-module">Physical Science</div><div class="grade-score">93<span>%</span></div></div>
+    <div class="grade-card"><div class="grade-module">English for Academic Purposes</div><div class="grade-score">92<span>%</span></div></div>
+    <div class="grade-card"><div class="grade-module">Introduction to Computing</div><div class="grade-score">90<span>%</span></div></div>
+    <div class="grade-card"><div class="grade-module">Mathematical Applications</div><div class="grade-score">82<span>%</span></div></div>
+    <div class="grade-card"><div class="grade-module">Research & Study Skills</div><div class="grade-score">80<span>%</span></div></div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" style="background:var(--surface)">
+  <div class="section-label">04 — Technical Skills</div>
+  <h2 class="section-title reveal">What I bring<br>to the <em style="color:var(--accent2);font-style:italic;font-family:'Instrument Serif',serif;">table.</em></h2>
+  <div class="skills-grid reveal">
+    <div class="skill-cluster">
+      <div class="cluster-icon">⚡</div>
+      <div class="cluster-name">Programming</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Python</span><span class="skill-tag">Java</span><span class="skill-tag">JavaScript</span><span class="skill-tag">SQL</span><span class="skill-tag">HTML/CSS</span>
+      </div>
+    </div>
+    <div class="skill-cluster">
+      <div class="cluster-icon">🌐</div>
+      <div class="cluster-name">Web & App Dev</div>
+      <div class="skill-tags">
+        <span class="skill-tag b">Web Technologies</span><span class="skill-tag b">Mobile Dev</span><span class="skill-tag b">REST APIs</span><span class="skill-tag b">Responsive Design</span>
+      </div>
+    </div>
+    <div class="skill-cluster">
+      <div class="cluster-icon">🗄️</div>
+      <div class="cluster-name">Data & Databases</div>
+      <div class="skill-tags">
+        <span class="skill-tag">SQL / MySQL</span><span class="skill-tag">Database Design</span><span class="skill-tag">Data Analysis</span><span class="skill-tag">Data Modelling</span>
+      </div>
+    </div>
+    <div class="skill-cluster">
+      <div class="cluster-icon">🤖</div>
+      <div class="cluster-name">AI & Innovation</div>
+      <div class="skill-tags">
+        <span class="skill-tag p">AI Application Dev</span><span class="skill-tag p">User Research</span><span class="skill-tag p">Product Design</span><span class="skill-tag p">Focus Groups</span>
+      </div>
+    </div>
+    <div class="skill-cluster">
+      <div class="cluster-icon">🔧</div>
+      <div class="cluster-name">Systems & Tools</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Networking</span><span class="skill-tag">CRM Systems</span><span class="skill-tag">SITS</span><span class="skill-tag">MS Office Suite</span><span class="skill-tag">Linux</span>
+      </div>
+    </div>
+    <div class="skill-cluster">
+      <div class="cluster-icon">🤝</div>
+      <div class="cluster-name">Business & People</div>
+      <div class="skill-tags">
+        <span class="skill-tag p">Project Management</span><span class="skill-tag p">Stakeholder Comms</span><span class="skill-tag p">Leadership</span><span class="skill-tag p">Mentoring</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AWARDS -->
+<section id="awards">
+  <div class="section-label">05 — Awards & Volunteering</div>
+  <h2 class="section-title reveal">Recognition &<br><em style="color:var(--accent3);font-style:italic;font-family:'Instrument Serif',serif;">community.</em></h2>
+  <div class="awards-grid reveal">
+    <div class="award-card">
+      <div class="award-icon">🏆</div>
+      <div class="award-title">Microsoft Embrace Business Challenge — Semi-Finalist</div>
+      <div class="award-org">Microsoft / EDI · February 2025</div>
+      <div class="award-desc">Collaborated with a team of five to develop an innovative business solution, progressing to the semi-finals through strong market research, problem-solving, and presentation.</div>
+    </div>
+    <div class="award-card">
+      <div class="award-icon">🌟</div>
+      <div class="award-title">Excellent Engagement Certificate</div>
+      <div class="award-org">University of East London · April 2025</div>
+      <div class="award-desc">Recognised for completing a mentoring placement supporting Level 4 Computer Science students with lab sessions, coursework guidance, and academic support throughout the programme.</div>
+    </div>
+    <div class="award-card">
+      <div class="award-icon">🎓</div>
+      <div class="award-title">Peer Mentoring Recognition</div>
+      <div class="award-org">University of East London · May 2024</div>
+      <div class="award-desc">Recognised for guiding 10+ fellow students through academic challenges and improving coursework performance across Computer Science modules.</div>
+    </div>
+    <div class="award-card">
+      <div class="award-icon">❤️</div>
+      <div class="award-title">Volunteering Project of the Year</div>
+      <div class="award-org">University of East London · May 2024</div>
+      <div class="award-desc">Awarded for exceptional contribution to a community project enhancing the quality of life for elderly residents at Southern Housing through technology mentoring and training sessions.</div>
+    </div>
+  </div>
+
+  <div class="vol-subtitle reveal">Voluntary Roles</div>
+  <div class="vol-grid reveal">
+    <div class="vol-card">
+      <div class="vol-title">Tech Skills for the Elderly</div>
+      <div class="vol-org">UEL Volunteering Project · January 2023 – Present</div>
+      <div class="vol-desc">Mentored 10+ elderly residents at Southern Housing with technology challenges. Facilitated 4 training sessions helping residents adapt to modern digital tools,significantly enhancing their daily independence.</div>
+    </div>
+    <div class="vol-card">
+      <div class="vol-title">Residential Life Ambassador</div>
+      <div class="vol-org">University of East London · September 2024 – Present</div>
+      <div class="vol-desc">Organised and volunteered at Residential Life events across campus, contributing to a positive and inclusive community atmosphere for students at UEL.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+  <div class="contact-inner">
+    <div class="section-label">06 — Contact</div>
+    <h2 class="section-title reveal">Let's work<br><em style="color:var(--accent);font-style:italic;font-family:'Instrument Serif',serif;">together.</em></h2>
+    <p class="contact-sub reveal">I'm actively seeking graduate schemes and entry-level tech roles in London and beyond. If you think I'd be a good fit for your team, I'd love to hear from you.</p>
+    <div class="contact-links reveal">
+      <a href="mailto:nandaabhilash9119@gmail.com" class="contact-link">
+        <div class="contact-link-left">
+          <span class="contact-link-icon">✉</span>
+          <div><div class="contact-link-label">Email</div><div class="contact-link-sub">nandaabhilash9119@gmail.com</div></div>
+        </div>
+        <span class="contact-link-arrow">→</span>
+      </a>
+      <a href="https://www.linkedin.com/in/nanda-abhilash-a63916276/" target="_blank" class="contact-link">
+        <div class="contact-link-left">
+          <span class="contact-link-icon">in</span>
+          <div><div class="contact-link-label">LinkedIn</div><div class="contact-link-sub">linkedin.com/in/nanda-abhilash-a63916276</div></div>
+        </div>
+        <span class="contact-link-arrow">→</span>
+      </a>
+      <a href="https://github.com/NandaAbhilash" target="_blank" class="contact-link">
+        <div class="contact-link-left">
+          <span class="contact-link-icon">⌥</span>
+          <div><div class="contact-link-label">GitHub</div><div class="contact-link-sub">github.com/NandaAbhilash</div></div>
+        </div>
+        <span class="contact-link-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-text">© 2025 <span>Nanda Abhilash</span></div>
+  <div class="footer-text">BSc Computer Science · University of East London</div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+  (function animCursor(){
+    cursor.style.left=mx+'px';cursor.style.top=my+'px';
+    rx+=(mx-rx)*.12;ry+=(my-ry)*.12;
+    ring.style.left=rx+'px';ring.style.top=ry+'px';
+    requestAnimationFrame(animCursor);
+  })();
+  document.querySelectorAll('a,button').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{cursor.style.width='20px';cursor.style.height='20px';ring.style.width='50px';ring.style.height='50px';});
+    el.addEventListener('mouseleave',()=>{cursor.style.width='12px';cursor.style.height='12px';ring.style.width='36px';ring.style.height='36px';});
+  });
+  function showLevel(level,btn){
+    document.querySelectorAll('.grades-grid').forEach(g=>g.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.getElementById(level).classList.add('active');
+    btn.classList.add('active');
+  }
+  const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:.1});
+  document.querySelectorAll('.reveal').forEach(el=>obs
