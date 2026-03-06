@@ -9,65 +9,63 @@
   :root {
     --bg: #0a0a0f;
     --surface: #111118;
-    --accent: #00f5a0;
-    --accent2: #ff6b35;
-    --accent3: #ffe600;
+    --accent: #7fff6e;
+    --accent2: #4ee6ff;
+    --accent3: #ff6eb4;
     --text: #f0f0f5;
-    --muted: #6b6b80;
-    --border: rgba(255,255,255,0.07);
+    --muted: #9d9db3;
+    --border: rgba(255,255,255,0.12);
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  body { background: var(--bg); color: var(--text); font-family: 'DM Mono', monospace; overflow-x: hidden; }
-  @media (pointer:fine) { body { cursor: none; } }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Mono', monospace; overflow-x: hidden; cursor: none; }
 
-  .cursor { position:fixed; width:12px; height:12px; background:var(--accent); border-radius:50%; pointer-events:none; z-index:10001; transform:translate(-50%,-50%); transition:width .2s,height .2s; }
-  .cursor-ring { position:fixed; width:36px; height:36px; border:1.5px solid var(--accent); border-radius:50%; pointer-events:none; z-index:10000; transform:translate(-50%,-50%); }
+  .cursor { position:fixed; width:12px; height:12px; background:var(--accent); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:width .2s,height .2s; mix-blend-mode:difference; }
+  .cursor-ring { position:fixed; width:36px; height:36px; border:1.5px solid var(--accent); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); mix-blend-mode:difference; }
 
-  body::before { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events:none; z-index:1000; opacity:.5; }
+  body::before { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events:none; z-index:1000; opacity:.3; }
 
   nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; justify-content:space-between; align-items:center; padding:1.5rem 3rem; background:rgba(10,10,15,.85); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); }
   .nav-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.1rem; color:var(--text); text-decoration:none; letter-spacing:-.02em; }
   .nav-logo span { color:var(--accent); }
   .nav-links { display:flex; gap:2rem; list-style:none; }
-  .nav-links a { color:var(--muted); text-decoration:none; font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; transition:color .2s; }
+  .nav-links a { color:var(--muted); text-decoration:none; font-size:.75rem; letter-spacing:.1em; text-transform:uppercase; transition:color .2s; }
   .nav-links a:hover { color:var(--accent); }
 
   .hero { min-height:100vh; display:flex; align-items:center; padding:8rem 3rem 6rem; position:relative; overflow:hidden; }
-  .hero-grid-bg { position:absolute; inset:0; background-image:linear-gradient(rgba(0,245,160,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,245,160,.03) 1px,transparent 1px); background-size:60px 60px; animation:gridScroll 20s linear infinite; }
+  .hero-grid-bg { position:absolute; inset:0; background-image:linear-gradient(rgba(127,255,110,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(127,255,110,.03) 1px,transparent 1px); background-size:60px 60px; animation:gridScroll 20s linear infinite; }
   @keyframes gridScroll { from{background-position:0 0} to{background-position:60px 60px} }
-  .hero-glow { position:absolute; width:600px; height:600px; background:radial-gradient(circle,rgba(0,245,160,.08) 0%,transparent 70%); top:-100px; right:-100px; animation:pulse 6s ease-in-out infinite; }
-  .hero-glow2 { position:absolute; width:400px; height:400px; background:radial-gradient(circle,rgba(255,107,53,.06) 0%,transparent 70%); bottom:0; left:200px; animation:pulse 8s ease-in-out infinite reverse; }
+  .hero-glow { position:absolute; width:600px; height:600px; background:radial-gradient(circle,rgba(127,255,110,.08) 0%,transparent 70%); top:-100px; right:-100px; animation:pulse 6s ease-in-out infinite; }
+  .hero-glow2 { position:absolute; width:400px; height:400px; background:radial-gradient(circle,rgba(78,230,255,.06) 0%,transparent 70%); bottom:0; left:200px; animation:pulse 8s ease-in-out infinite reverse; }
   @keyframes pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.1);opacity:.7} }
   .hero-content { position:relative; max-width:960px; }
-  .hero-tag { display:inline-flex; align-items:center; gap:.5rem; background:rgba(0,245,160,.08); border:1px solid rgba(0,245,160,.2); color:var(--accent); font-size:.7rem; letter-spacing:.15em; text-transform:uppercase; padding:.4rem 1rem; border-radius:2px; margin-bottom:2rem; animation:fadeUp .6s ease both; }
+  .hero-tag { display:inline-flex; align-items:center; gap:.5rem; background:rgba(127,255,110,.08); border:1px solid rgba(127,255,110,.2); color:var(--accent); font-size:.7rem; letter-spacing:.15em; text-transform:uppercase; padding:.4rem 1rem; border-radius:2px; margin-bottom:2rem; animation:fadeUp .6s ease both; }
   .hero-tag::before { content:''; width:6px; height:6px; background:var(--accent); border-radius:50%; animation:blink 1.5s ease infinite; }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
   .hero-name { font-family:'Syne',sans-serif; font-weight:800; font-size:clamp(3.5rem,8vw,7rem); line-height:.95; letter-spacing:-.03em; margin-bottom:1.5rem; animation:fadeUp .6s .1s ease both; }
-  .hero-name .line2 { display:block; color:transparent; -webkit-text-stroke:1.5px rgba(255,255,255,.3); }
+  .hero-name .line2 { display:block; color:transparent; -webkit-text-stroke:1.5px rgba(255,255,255,.55); }
   .hero-name .accent-word { color:var(--accent); -webkit-text-stroke:0; font-style:italic; font-family:'Instrument Serif',serif; }
   .hero-sub { font-size:.9rem; color:var(--muted); max-width:520px; line-height:1.85; margin-bottom:1.25rem; animation:fadeUp .6s .2s ease both; }
   .hero-badges { display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:2.5rem; animation:fadeUp .6s .25s ease both; }
-  .hero-badge { background:rgba(255,255,255,.04); border:1px solid var(--border); color:var(--muted); font-size:.62rem; letter-spacing:.08em; padding:.3rem .8rem; border-radius:2px; }
-  .hero-badge.g { background:rgba(0,245,160,.06); border-color:rgba(0,245,160,.2); color:var(--accent); }
-  .hero-badge.b { background:rgba(255,107,53,.06); border-color:rgba(255,107,53,.2); color:var(--accent2); }
-  .hero-badge.p { background:rgba(255,230,0,.06); border-color:rgba(255,230,0,.2); color:var(--accent3); }
+  .hero-badge { background:rgba(255,255,255,.04); border:1px solid var(--border); color:var(--muted); font-size:.72rem; letter-spacing:.08em; padding:.3rem .8rem; border-radius:2px; }
+  .hero-badge.g { background:rgba(127,255,110,.06); border-color:rgba(127,255,110,.2); color:var(--accent); }
+  .hero-badge.b { background:rgba(78,230,255,.06); border-color:rgba(78,230,255,.2); color:var(--accent2); }
   .hero-cta { display:flex; gap:1rem; flex-wrap:wrap; animation:fadeUp .6s .3s ease both; }
   .btn-primary { display:inline-flex; align-items:center; gap:.5rem; background:var(--accent); color:#0a0a0f; font-family:'Syne',sans-serif; font-weight:700; font-size:.8rem; letter-spacing:.05em; text-transform:uppercase; padding:.9rem 2rem; text-decoration:none; border-radius:2px; transition:transform .2s,box-shadow .2s; }
-  .btn-primary:hover { transform:translateY(-2px); box-shadow:0 10px 40px rgba(0,245,160,.3); }
+  .btn-primary:hover { transform:translateY(-2px); box-shadow:0 10px 40px rgba(127,255,110,.3); }
   .btn-secondary { display:inline-flex; align-items:center; background:transparent; color:var(--text); font-family:'Syne',sans-serif; font-weight:600; font-size:.8rem; letter-spacing:.05em; text-transform:uppercase; padding:.9rem 2rem; text-decoration:none; border:1px solid var(--border); border-radius:2px; transition:border-color .2s,color .2s; }
   .btn-secondary:hover { border-color:var(--accent2); color:var(--accent2); }
-  .hero-scroll { position:absolute; bottom:3rem; left:3rem; display:flex; align-items:center; gap:1rem; color:var(--muted); font-size:.65rem; letter-spacing:.15em; text-transform:uppercase; animation:fadeUp .6s .5s ease both; }
+  .hero-scroll { position:absolute; bottom:3rem; left:3rem; display:flex; align-items:center; gap:1rem; color:var(--muted); font-size:.72rem; letter-spacing:.15em; text-transform:uppercase; animation:fadeUp .6s .5s ease both; }
   .scroll-line { width:40px; height:1px; background:var(--muted); animation:sl 2s ease infinite; }
   @keyframes sl { 0%{width:40px} 50%{width:10px} 100%{width:40px} }
   .hero-stats { position:absolute; right:3rem; bottom:3rem; display:flex; gap:3rem; animation:fadeUp .6s .4s ease both; }
   .stat { text-align:right; }
   .stat-num { font-family:'Syne',sans-serif; font-weight:800; font-size:2rem; color:var(--accent); line-height:1; }
-  .stat-label { font-size:.65rem; color:var(--muted); letter-spacing:.1em; text-transform:uppercase; }
+  .stat-label { font-size:.72rem; color:var(--muted); letter-spacing:.1em; text-transform:uppercase; }
   @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
 
   section { padding:8rem 3rem; position:relative; }
-  .section-label { font-size:.65rem; letter-spacing:.2em; text-transform:uppercase; color:var(--accent); margin-bottom:1rem; display:flex; align-items:center; gap:1rem; }
+  .section-label { font-size:.72rem; letter-spacing:.2em; text-transform:uppercase; color:var(--accent); margin-bottom:1rem; display:flex; align-items:center; gap:1rem; }
   .section-label::after { content:''; flex:1; max-width:60px; height:1px; background:var(--accent); opacity:.4; }
   .section-title { font-family:'Syne',sans-serif; font-weight:800; font-size:clamp(2rem,5vw,3.5rem); letter-spacing:-.03em; line-height:1.05; margin-bottom:4rem; }
 
@@ -90,11 +88,11 @@
   .exp-section { background:var(--surface); }
   .timeline { display:flex; flex-direction:column; gap:1.25rem; }
   .exp-card { background:var(--bg); border:1px solid var(--border); border-radius:4px; padding:2rem 2.25rem; position:relative; overflow:hidden; transition:border-color .2s,transform .2s; }
-  .exp-card:hover { border-color:rgba(0,245,160,.25); transform:translateX(5px); }
+  .exp-card:hover { border-color:rgba(127,255,110,.25); transform:translateX(5px); }
   .exp-card::before { content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:linear-gradient(180deg,var(--accent),var(--accent2)); }
   .exp-card.ibm::before { background:linear-gradient(180deg,var(--accent2),#0062ff); }
   .exp-card.siemens::before { background:linear-gradient(180deg,var(--accent3),var(--accent2)); }
-  .exp-card.library::before { background:linear-gradient(180deg,var(--accent3),rgba(255,230,0,.3)); }
+  .exp-card.library::before { background:linear-gradient(180deg,var(--accent3),rgba(255,110,180,.3)); }
   .exp-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1rem; flex-wrap:wrap; gap:.5rem; }
   .exp-role { font-family:'Syne',sans-serif; font-weight:700; font-size:.95rem; color:var(--text); }
   .exp-company { font-size:.72rem; color:var(--accent); margin-top:.2rem; letter-spacing:.04em; }
@@ -117,7 +115,7 @@
   .grades-grid.active { display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:1rem; }
   .grade-card { background:var(--bg); border:1px solid var(--border); border-radius:4px; padding:1.2rem 1.5rem; display:flex; justify-content:space-between; align-items:center; transition:border-color .2s,transform .2s; position:relative; overflow:hidden; }
   .grade-card::before { content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--accent); transform:scaleY(0); transform-origin:bottom; transition:transform .3s ease; }
-  .grade-card:hover { border-color:rgba(0,245,160,.3); transform:translateX(4px); }
+  .grade-card:hover { border-color:rgba(127,255,110,.3); transform:translateX(4px); }
   .grade-card:hover::before { transform:scaleY(1); }
   .grade-module { font-size:.76rem; color:var(--text); line-height:1.4; max-width:210px; }
   .grade-score { font-family:'Syne',sans-serif; font-weight:800; font-size:1.3rem; color:var(--accent); white-space:nowrap; }
@@ -126,18 +124,18 @@
   /* SKILLS */
   .skills-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
   .skill-cluster { background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1.75rem; transition:border-color .2s; }
-  .skill-cluster:hover { border-color:rgba(0,245,160,.2); }
+  .skill-cluster:hover { border-color:rgba(127,255,110,.2); }
   .cluster-icon { font-size:1.4rem; margin-bottom:1rem; }
   .cluster-name { font-family:'Syne',sans-serif; font-weight:700; font-size:.82rem; color:var(--text); margin-bottom:1rem; letter-spacing:.02em; }
   .skill-tags { display:flex; flex-wrap:wrap; gap:.4rem; }
-  .skill-tag { background:rgba(0,245,160,.06); border:1px solid rgba(0,245,160,.15); color:var(--accent); font-size:.63rem; letter-spacing:.07em; padding:.28rem .65rem; border-radius:2px; }
-  .skill-tag.b { background:rgba(255,107,53,.06); border-color:rgba(255,107,53,.15); color:var(--accent2); }
-  .skill-tag.p { background:rgba(255,230,0,.06); border-color:rgba(255,230,0,.15); color:var(--accent3); }
+  .skill-tag { background:rgba(127,255,110,.06); border:1px solid rgba(127,255,110,.15); color:var(--accent); font-size:.72rem; letter-spacing:.07em; padding:.28rem .65rem; border-radius:2px; }
+  .skill-tag.b { background:rgba(78,230,255,.06); border-color:rgba(78,230,255,.15); color:var(--accent2); }
+  .skill-tag.p { background:rgba(255,110,180,.06); border-color:rgba(255,110,180,.15); color:var(--accent3); }
 
   /* AWARDS */
   .awards-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:1.5rem; margin-bottom:4rem; }
   .award-card { background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:2rem; transition:border-color .2s,transform .2s; position:relative; overflow:hidden; }
-  .award-card:hover { border-color:rgba(255,230,0,.3); transform:translateY(-4px); }
+  .award-card:hover { border-color:rgba(255,110,180,.3); transform:translateY(-4px); }
   .award-card::after { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(255,110,180,.03) 0%,transparent 60%); pointer-events:none; }
   .award-icon { font-size:1.6rem; margin-bottom:1rem; }
   .award-title { font-family:'Syne',sans-serif; font-weight:700; font-size:.88rem; color:var(--text); margin-bottom:.4rem; line-height:1.3; }
@@ -146,7 +144,7 @@
   .vol-subtitle { font-family:'Syne',sans-serif; font-weight:700; font-size:1.3rem; color:var(--text); margin-bottom:2rem; letter-spacing:-.02em; }
   .vol-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; }
   .vol-card { background:var(--bg); border:1px solid var(--border); border-radius:4px; padding:1.75rem; transition:border-color .2s; }
-  .vol-card:hover { border-color:rgba(255,107,53,.25); }
+  .vol-card:hover { border-color:rgba(78,230,255,.25); }
   .vol-title { font-family:'Syne',sans-serif; font-weight:700; font-size:.86rem; color:var(--text); margin-bottom:.3rem; }
   .vol-org { font-size:.68rem; color:var(--accent2); margin-bottom:.7rem; }
   .vol-desc { color:var(--muted); font-size:.74rem; line-height:1.7; }
@@ -166,10 +164,10 @@
   .contact-link:hover .contact-link-arrow { color:var(--accent); transform:translateX(4px); }
 
   footer { border-top:1px solid var(--border); padding:2.5rem 3rem; display:flex; justify-content:space-between; align-items:center; }
-  .footer-text { color:var(--muted); font-size:.7rem; letter-spacing:.05em; }
+  .footer-text { color:var(--muted); font-size:.75rem; letter-spacing:.05em; }
   .footer-text span { color:var(--accent); }
 
-  .reveal { opacity:1; transform:translateY(0); transition:opacity .7s ease,transform .7s ease; }
+  .reveal { opacity:0; transform:translateY(28px); transition:opacity .7s ease,transform .7s ease; }
   .reveal.visible { opacity:1; transform:translateY(0); }
 
   @media(max-width:768px){
@@ -209,22 +207,22 @@
   <div class="hero-glow"></div>
   <div class="hero-glow2"></div>
   <div class="hero-content">
-    <div class="hero-tag">Available for graduate roles · 2026</div>
+    <div class="hero-tag">Available for graduate roles · 2025</div>
     <h1 class="hero-name">
       <span style="display:block">Nanda</span>
       <span class="line2"><span class="accent-word">Abhilash</span></span>
     </h1>
-    <p class="hero-sub">Final-year Computer Science graduate from UEL, experienced at IBM &amp; Siemens, consistently first-class, and passionate about technology that creates real-world impact.</p>
+    <p class="hero-sub">Final-year Computer Science graduate from UEL — experienced at IBM & Siemens, consistently first-class, and passionate about technology that creates real-world impact.</p>
     <div class="hero-badges">
       <span class="hero-badge g">IBM Intern</span>
       <span class="hero-badge g">Siemens Intern</span>
       <span class="hero-badge b">Microsoft Semi-Finalist</span>
-      <span class="hero-badge p">Teaching Assistant</span>
-      <span class="hero-badge g">First Class · 91%</span>
-      <span class="hero-badge b">Volunteering Award</span>
+      <span class="hero-badge">Teaching Assistant</span>
+      <span class="hero-badge">First Class · 91%</span>
+      <span class="hero-badge">Volunteering Award</span>
     </div>
     <div class="hero-cta">
-      <a href="mailto:nandaabhilash9119@gmail.com" class="btn-primary">Get in touch →</a>
+      <a href="#contact" class="btn-primary">Get in touch →</a>
       <a href="#experience" class="btn-secondary">View experience</a>
     </div>
   </div>
@@ -242,9 +240,9 @@
   <h2 class="section-title reveal">Bridging <em style="color:var(--accent);font-style:italic;font-family:'Instrument Serif',serif;">technology</em><br>& real impact.</h2>
   <div class="about-grid reveal">
     <div class="about-text">
-      <p>I'm <strong>Nanda Abhilash</strong>, a final-year Computer Science student at the <em>University of East London</em> with real-world experience at <strong>IBM</strong> and <strong>Siemens</strong> alongside a first-class academic record, 91% at both Level 4 and Level 5.</p>
+      <p>I'm <strong>Nanda Abhilash</strong>, a final-year Computer Science student at the <em>University of East London</em> with real-world experience at <strong>IBM</strong> and <strong>Siemens</strong> alongside a first-class academic record — 91% at both Level 4 and Level 5.</p>
       <p>At IBM, I contributed to building an <em>AI-powered course recommendation application</em>, working across user research, product design, and cross-functional team collaboration. At Siemens, I conducted data analysis and developed sustainability solutions presented to potential shareholders.</p>
-      <p>I currently serve as a <strong>Teaching Assistant</strong> at UEL and am committed to technology that genuinely helps people, from mentoring peers to supporting elderly residents with digital skills. I'm actively seeking graduate tech roles where I can drive transformation and long-term value.</p>
+      <p>I currently serve as a <strong>Teaching Assistant</strong> at UEL and am committed to technology that genuinely helps people — from mentoring peers to supporting elderly residents with digital skills. I'm actively seeking graduate tech roles where I can drive transformation and long-term value.</p>
     </div>
     <div class="about-card">
       <div class="about-card-title">// Quick Info</div>
@@ -268,7 +266,7 @@
 
     <div class="exp-card">
       <div class="exp-header">
-        <div><div class="exp-role">Teaching Assistant</div><div class="exp-company" style="color:var(--accent)">University of East London</div></div>
+        <div><div class="exp-role">Teaching Assistant</div><div class="exp-company">University of East London</div></div>
         <div class="exp-date">June 2025 – Present<span class="loc">London, UK</span></div>
       </div>
       <ul class="exp-bullets">
@@ -294,7 +292,7 @@
 
     <div class="exp-card">
       <div class="exp-header">
-        <div><div class="exp-role">Enrolment Support Officer</div><div class="exp-company" style="color:var(--accent)">University of East London</div></div>
+        <div><div class="exp-role">Enrolment Support Officer</div><div class="exp-company">University of East London</div></div>
         <div class="exp-date">August – September 2025<span class="loc">London, UK</span></div>
       </div>
       <ul class="exp-bullets">
@@ -306,7 +304,7 @@
 
     <div class="exp-card">
       <div class="exp-header">
-        <div><div class="exp-role">Digital Skills Advisor</div><div class="exp-company" style="color:var(--accent)">University of East London</div></div>
+        <div><div class="exp-role">Digital Skills Advisor</div><div class="exp-company">University of East London</div></div>
         <div class="exp-date">November 2024 – Present<span class="loc">London, UK</span></div>
       </div>
       <ul class="exp-bullets">
@@ -349,7 +347,7 @@
   <div class="section-label">03 — Academic Record</div>
   <h2 class="section-title reveal">First-class across<br><em style="color:var(--accent);font-style:italic;font-family:'Instrument Serif',serif;">every level.</em></h2>
   <div class="grades-intro reveal">
-    <p>91% average at both Level 4 and Level 5, a consistent, genuine engagement with computing principles, not just exam performance. Every module reflects depth of understanding.</p>
+    <p>91% average at both Level 4 and Level 5 — a consistent, genuine engagement with computing principles, not just exam performance. Every module reflects depth of understanding.</p>
     <div class="avg-display">
       <div class="avg-num">91<span style="font-size:2rem;color:var(--muted)">%</span></div>
       <div class="avg-label">L4 & L5 Average</div>
@@ -493,7 +491,7 @@
     <div class="vol-card">
       <div class="vol-title">Tech Skills for the Elderly</div>
       <div class="vol-org">UEL Volunteering Project · January 2023 – Present</div>
-      <div class="vol-desc">Mentored 10+ elderly residents at Southern Housing with technology challenges. Facilitated 4 training sessions helping residents adapt to modern digital tools,significantly enhancing their daily independence.</div>
+      <div class="vol-desc">Mentored 10+ elderly residents at Southern Housing with technology challenges. Facilitated 4 training sessions helping residents adapt to modern digital tools — significantly enhancing their daily independence.</div>
     </div>
     <div class="vol-card">
       <div class="vol-title">Residential Life Ambassador</div>
@@ -510,24 +508,24 @@
     <h2 class="section-title reveal">Let's work<br><em style="color:var(--accent);font-style:italic;font-family:'Instrument Serif',serif;">together.</em></h2>
     <p class="contact-sub reveal">I'm actively seeking graduate schemes and entry-level tech roles in London and beyond. If you think I'd be a good fit for your team, I'd love to hear from you.</p>
     <div class="contact-links reveal">
-      <a href="mailto:nandaabhilash9119@gmail.com" class="contact-link">
+      <a href="mailto:your.email@email.com" class="contact-link">
         <div class="contact-link-left">
           <span class="contact-link-icon">✉</span>
-          <div><div class="contact-link-label">Email</div><div class="contact-link-sub">nandaabhilash9119@gmail.com</div></div>
+          <div><div class="contact-link-label">Email</div><div class="contact-link-sub">your.email@email.com</div></div>
         </div>
         <span class="contact-link-arrow">→</span>
       </a>
-      <a href="https://www.linkedin.com/in/nanda-abhilash-a63916276/" target="_blank" class="contact-link">
+      <a href="https://linkedin.com/in/yourprofile" target="_blank" class="contact-link">
         <div class="contact-link-left">
           <span class="contact-link-icon">in</span>
-          <div><div class="contact-link-label">LinkedIn</div><div class="contact-link-sub">linkedin.com/in/nanda-abhilash-a63916276</div></div>
+          <div><div class="contact-link-label">LinkedIn</div><div class="contact-link-sub">linkedin.com/in/yourprofile</div></div>
         </div>
         <span class="contact-link-arrow">→</span>
       </a>
-      <a href="https://github.com/NandaAbhilash" target="_blank" class="contact-link">
+      <a href="https://github.com/yourusername" target="_blank" class="contact-link">
         <div class="contact-link-left">
           <span class="contact-link-icon">⌥</span>
-          <div><div class="contact-link-label">GitHub</div><div class="contact-link-sub">github.com/NandaAbhilash</div></div>
+          <div><div class="contact-link-label">GitHub</div><div class="contact-link-sub">github.com/yourusername</div></div>
         </div>
         <span class="contact-link-arrow">→</span>
       </a>
@@ -536,7 +534,7 @@
 </section>
 
 <footer>
-  <div class="footer-text">© 2026 <span>Nanda Abhilash</span></div>
+  <div class="footer-text">© 2025 <span>Nanda Abhilash</span></div>
   <div class="footer-text">BSc Computer Science · University of East London</div>
 </footer>
 
@@ -562,6 +560,12 @@
   }
   const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:.1});
   document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+  const sections=document.querySelectorAll('section[id]'),navLinks=document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll',()=>{
+    let cur='';
+    sections.forEach(s=>{if(window.scrollY>=s.offsetTop-200)cur=s.getAttribute('id');});
+    navLinks.forEach(a=>{a.style.color=a.getAttribute('href')==='#'+cur?'var(--accent)':'';});
+  });
 </script>
 </body>
 </html>
